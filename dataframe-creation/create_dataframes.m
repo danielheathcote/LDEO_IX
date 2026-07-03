@@ -1,5 +1,12 @@
-function create_dataframes(stn)
-% function create_dataframes(stn)
+function create_dataframes(stn, yo)
+% function create_dataframes(stn, yo)
+%
+% input  : stn - station number (as for process_cast.m)
+%          yo  - OPTIONAL sub-cast number, for cruises whose stations are
+%                split into multiple casts (yoyo / tow-yo). It is not used
+%                by the processing itself -- it is only made available to
+%                set_dataframe_params.m for building file names, the cast
+%                name and the output directory. Standard cruises omit it.
 %
 % Run the LDEO_IX preprocessing (steps 1-13 of ../process_cast.m) for one
 % cast and, instead of calculating the inversion, export the super-ensemble

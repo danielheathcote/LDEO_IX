@@ -69,6 +69,20 @@ p.getdepth = 2;                % instrument depth from CTD pressure (p2z)
 %p.cut = 0;                    % uncomment for casts that never surface
                                % (see header note)
 
+% -------------------- Yoyo / Tow-Yo Cruises --------------------
+% If each station is split into sub-casts, call create_dataframes(stn, yo)
+% (or batch_create_dataframes(stations, true), which discovers all yos of
+% each station automatically) and use BOTH numbers in the file names and
+% output directory, e.g.:
+%
+% p.name    = sprintf('%s cast #%03d yo #%d', p.cruise_id, stn, yo);
+% f.ladcpdo = sprintf('data/raw_ladcp/%03d_%03dDL000.000', stn, yo);
+% f.ladcpup = sprintf('data/raw_ladcp/%03d_%03dUL000.000', stn, yo);
+% f.ctd     = sprintf('data/ctd_timeseries/%03d_%03d.asc', stn, yo);
+% p_df.outdir = sprintf('dataframes/%03d_%03d/', stn, yo);
+% f.res     = strcat(p_df.outdir, 'ladcp_df');
+% p.cut     = 0;   % yo segments at depth never surface (see header note)
+
 % -------------------- Dataframe Export Settings --------------------
 p_df.surface_depth     = 20;   % [m] instrument depth threshold for gps.csv
                                %  (Inf: dump ship track at every timestep)

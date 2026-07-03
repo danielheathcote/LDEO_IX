@@ -11,8 +11,10 @@ analyses outside MATLAB.
 ```matlab
 cd dataframe-creation
 % edit set_dataframe_params.m for your cruise first (paths, file layouts)
-create_dataframes(4)                  % one station
-failed = batch_create_dataframes(2:25);   % many stations, keeps going on errors
+create_dataframes(4)                       % one station
+create_dataframes(14, 3)                   % one sub-cast (yoyo cruises)
+failed = batch_create_dataframes(2:25);    % many stations, keeps going on errors
+failed = batch_create_dataframes(2:25, true);  % yoyo: all yos of each station
 ```
 
 `set_dataframe_params.m` plays the role of `set_cast_params.m` (same
@@ -93,6 +95,23 @@ the same 0.1°-colocation sanity check.
 | `sadcp_t_clock`, `t_seconds` | time |
 | `depth` | bin depth |
 | `u`, `v` | absolute ocean velocity |
+
+## Yoyo / tow-yo casts
+
+For cruises whose stations are split into sub-casts, pass the yo number as
+the optional second argument: `create_dataframes(stn, yo)`. `yo` is only
+seen by `set_dataframe_params.m`, which should use it in the raw/CTD file
+names and the output directory (see the commented block in the example
+file). In addition:
+
+- set `p.cut = 0` (see Caveats below — yo segments start and end at depth);
+- expect `gps.csv` to be header-only when the package never comes near the
+  surface (set `p_df.surface_depth = Inf` to get the ship track at every
+  super-ensemble instead);
+- `batch_create_dataframes(stations, true)` processes **all yos of each
+  station** automatically: it probes yo = 1, 2, 3, … via the file names
+  built by `set_dataframe_params.m` and stops at the first missing
+  downlooker raw file (yos must be numbered contiguously from 1).
 
 ## Caveats
 
