@@ -70,10 +70,10 @@ p.getdepth = 2;                % instrument depth from CTD pressure (p2z)
                                % (see header note)
 
 % -------------------- Yoyo / Tow-Yo Cruises --------------------
-% If each station is split into sub-casts, call create_dataframes(stn, yo)
-% (or batch_create_dataframes(stations, true), which discovers all yos of
-% each station automatically) and use BOTH numbers in the file names and
-% output directory, e.g.:
+% If each station is split into sub-casts, call create_dataframes([stn yo])
+% (same convention as process_cast.m; batch_create_dataframes(stations,
+% true) discovers all yos of each station automatically) and use BOTH
+% numbers in the file names and output directory, e.g.:
 %
 % p.name    = sprintf('%s cast #%03d yo #%d', p.cruise_id, stn, yo);
 % f.ladcpdo = sprintf('data/raw_ladcp/%03d_%03dDL000.000', stn, yo);

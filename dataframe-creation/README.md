@@ -12,7 +12,7 @@ analyses outside MATLAB.
 cd dataframe-creation
 % edit set_dataframe_params.m for your cruise first (paths, file layouts)
 create_dataframes(4)                       % one station
-create_dataframes(14, 3)                   % one sub-cast (yoyo cruises)
+create_dataframes([14 3])                  % one sub-cast (yoyo cruises)
 failed = batch_create_dataframes(2:25);    % many stations, keeps going on errors
 failed = batch_create_dataframes(2:25, true);  % yoyo: all yos of each station
 ```
@@ -98,8 +98,9 @@ the same 0.1°-colocation sanity check.
 
 ## Yoyo / tow-yo casts
 
-For cruises whose stations are split into sub-casts, pass the yo number as
-the optional second argument: `create_dataframes(stn, yo)`. `yo` is only
+For cruises whose stations are split into sub-casts, pass a two-element
+vector: `create_dataframes([stn yo])` — the same convention as
+`process_cast.m`. `yo` is only
 seen by `set_dataframe_params.m`, which should use it in the raw/CTD file
 names and the output directory (see the commented block in the example
 file). In addition:

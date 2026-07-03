@@ -48,7 +48,7 @@ else
     while cast_exists(stn, yo)
       fprintf('Creating dataframes for station %d, yo %d\n', stn, yo);
       try
-        create_dataframes(stn, yo);
+        create_dataframes([stn yo]);
       catch err
         fprintf('>>> FAILED station %d yo %d: %s\n', stn, yo, err.message);
         failed(end+1,:) = [stn yo];

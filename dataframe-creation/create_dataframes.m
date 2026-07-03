@@ -1,12 +1,13 @@
-function create_dataframes(stn, yo)
-% function create_dataframes(stn, yo)
+function create_dataframes(stn)
+% function create_dataframes(stn)
 %
-% input  : stn - station number (as for process_cast.m)
-%          yo  - OPTIONAL sub-cast number, for cruises whose stations are
-%                split into multiple casts (yoyo / tow-yo). It is not used
-%                by the processing itself -- it is only made available to
+% input  : stn - station number, or [stn yo] two-element vector for
+%                cruises whose stations are split into multiple casts
+%                (yoyo / tow-yo) -- the same convention as process_cast.m.
+%                The sub-cast number yo is not used by the processing
+%                itself; it is only made available to
 %                set_dataframe_params.m for building file names, the cast
-%                name and the output directory. Standard cruises omit it.
+%                name and the output directory.
 %
 % Run the LDEO_IX preprocessing (steps 1-13 of ../process_cast.m) for one
 % cast and, instead of calculating the inversion, export the super-ensemble
@@ -27,6 +28,11 @@ function create_dataframes(stn, yo)
 % make the LDEO_IX functions (loadrdi, prepinv, ...) resolve regardless of cwd
 addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
 more off;
+
+if length(stn) > 1			% stn = [stn yo]: sub-cast number
+  yo = stn(2);				%  for set_dataframe_params.m
+  stn = stn(1);				%  (yoyo / tow-yo cruises)
+end
 
 %----------------------------------------------------------------------
 % STEP 0: DEFAULTS & CAST PARAMETERS
