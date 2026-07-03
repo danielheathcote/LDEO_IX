@@ -3,6 +3,11 @@ function [] = process_cast(stn,begin_step,stop,eval_expr)
 %
 % Process LADCP cast, including GPS, SADCP, and BT data.
 %
+% For cruises whose stations are split into sub-casts (yoyo / tow-yo),
+% stn may be a two-element vector [stn yo]; the sub-cast number yo is
+% then available to [set_cast_params.m] (e.g. for building file names)
+% but is not otherwise used by the processing.
+%
 % Before a cast is processed, [set_cast_params.m] is called --- cruise-
 % and/or cast-specific parameters should be set there. After a cast
 % is processed, [post_process_cast.m] is called (if it exists) --- cruise-
@@ -96,6 +101,8 @@ function [] = process_cast(stn,begin_step,stop,eval_expr)
 %  Sep  4, 2019: - replaced [getshear2.m] by GK's new [calc_shear3.m]
 %  Nov 19, 2021: - cosmetics
 %  Jun 25, 2024: - changed Step 4 to discard BT velocities from UL
+%  Jul  3, 2026: - allowed stn = [stn yo] to pass a sub-cast number to
+%		   [set_cast_params.m] (yoyo / tow-yo cruises)
 % HISTORY END
 
 %----------------------------------------------------------------------
@@ -105,6 +112,11 @@ function [] = process_cast(stn,begin_step,stop,eval_expr)
 if nargin < 4, eval_expr = ''; end	% by default, no variable overrides
 if nargin < 3, stop = 0; end		% by default, no debug stops
 if nargin < 2, begin_step = 1; end	% by default, start from scratch
+
+if length(stn) > 1			% stn = [stn yo]: sub-cast number
+  yo = stn(2);				%  for [set_cast_params.m]
+  stn = stn(1);				%  (yoyo / tow-yo cruises)
+end
 
 pcs.begin_step 	= begin_step;		% parameters are state variables
 pcs.stop 	= stop;
