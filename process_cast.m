@@ -581,7 +581,7 @@ if pcs.begin_step <= pcs.cur_step
          ok = 1; eval(sprintf('h = get(%d);',j),'ok = 0;');
          if ok
            figure(j); pause(1);
-           eval(sprintf('print -dpsc %s_%02d.ps',f.res,j))
+           exportgraphics(figure(j),sprintf('%s_%02d.pdf',f.res,j),'ContentType','vector')
          end
        end
     end
