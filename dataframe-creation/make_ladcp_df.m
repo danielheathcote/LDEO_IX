@@ -12,7 +12,7 @@ function [names, cols] = make_ladcp_df(di)
 %                      equal t_step)
 %          t_clock   - ISO 8601 time stamp
 %          t_seconds - seconds since first super-ensemble
-%          dt        - seconds since previous super-ensemble (NaN for first)
+%          dt        - seconds until next super-ensemble (NaN for last)
 %          bin_idx   - signed bin number: +1..+N downlooker (1 nearest the
 %                      instrument, increasing downward), -1..-M uplooker
 %          depth     - depth of the measurement [m, positive down]
@@ -25,7 +25,7 @@ names = {'t_step','t_clock','t_seconds','dt','bin_idx','depth','u','v'};
 % per-super-ensemble time columns
 tj = di.time_jul(:);
 tsec = (tj - tj(1)) * 86400;
-dtv = [NaN; diff(tj) * 86400];
+dtv = [diff(tj) * 86400; NaN];
 tclock = jul2iso(tj);
 
 % signed bin index per matrix row (uplooker rows first, see loadrdi.m:
