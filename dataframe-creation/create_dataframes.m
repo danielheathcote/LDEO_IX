@@ -223,6 +223,9 @@ n_btrack = write_df_csv([p_df.outdir,'btrack.csv'], names, cols);
 [names,cols] = make_sadcp_df(f, p, di.time_jul(1));
 n_sadcp = write_df_csv([p_df.outdir,'sadcp.csv'], names, cols);
 
+[names,cols] = make_sadcp_mean_df(f, p, di.time_jul(1));
+n_sadcp_mean = write_df_csv([p_df.outdir,'sadcp_mean.csv'], names, cols);
+
 if p_df.save_state
   save([p_df.outdir,'step13_state.mat'],'d','di','p','f');
 end
@@ -247,6 +250,7 @@ disp(['  ladcp.csv  rows  : ',int2str(n_ladcp)]);
 disp(['  gps.csv    rows  : ',int2str(n_gps)]);
 disp(['  btrack.csv rows  : ',int2str(n_btrack)]);
 disp(['  sadcp.csv  rows  : ',int2str(n_sadcp)]);
+disp(['  sadcp_mean.csv rows : ',int2str(n_sadcp_mean)]);
 
 if ~p_df.show_plots
   close all;
